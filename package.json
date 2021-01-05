@@ -1,0 +1,37 @@
+{
+  "name": "chai-kekka",
+  "version": "0.0.1",
+  "description": "Chai plugin for Kekka",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apemb/chai-kekka.git"
+  },
+  "homepage": "https://github.com/apemb/chai-kekka",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint  src/**.js test/**.js --fix",
+    "test": "mocha --recursive --exit"
+  },
+  "keywords": [
+    "chai",
+    "test",
+    "chai-plugin",
+    "Result",
+    "Monad"
+  ],
+  "author": "Antoine Boileau",
+  "license": "ISC",
+  "dependencies": {
+    "kekka": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.15.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "mocha": "^8.2.1"
+  }
+}
