@@ -140,4 +140,63 @@ describe('assertions', () => {
       expect(isFailureWrappingAssertion(notAResult, 'not useful')).to.throw(AssertionError, assertionErrorMessage)
     })
   })
+
+  describe('associatedValue', () => {
+    it('should succeed if associated value equals expected', () => {
+      const expectedValue = 'Some String'
+      const someSuccessResult = Success('Some String')
+
+      const isASuccessAssociatedValueAssertion = function (value, expected) {
+        return () => expect(value).to.be.a.success.with.associatedValue.that.equals(expected)
+      }
+
+      expect(isASuccessAssociatedValueAssertion(someSuccessResult, expectedValue)).not.to.throw()
+    })
+
+    it('should work also with failure result type', () => {
+      const expectedValue = new Error('Some Failure')
+      const someFailureResult = Failure(expectedValue)
+
+      const isAFailureAssociatedValueAssertion = function (value, expected) {
+        return () => expect(value).to.be.a.failure.with.associatedValue.that.equals(expected)
+      }
+
+      expect(isAFailureAssociatedValueAssertion(someFailureResult, expectedValue)).not.to.throw()
+    })
+
+    it('should work also with result property', () => {
+      const expectedValue = 'Some String'
+      const someSuccessResult = Success('Some String')
+
+      const isAResultAssociatedValueAssertion = function (value, expected) {
+        return () => expect(value).to.be.a.result.with.associatedValue.that.equals(expected)
+      }
+
+      expect(isAResultAssociatedValueAssertion(someSuccessResult, expectedValue)).not.to.throw()
+    })
+
+    it('should work also with deep equality assertion', () => {
+      const expectedObject = { a: 'property' }
+      const someSuccessResult = Success({ a: 'property' })
+
+      const isASuccessAssociatedValueAssertion = function (value, expected) {
+        return () => expect(value).to.be.a.success.with.associatedValue.that.deep.equals(expected)
+      }
+
+      expect(isASuccessAssociatedValueAssertion(someSuccessResult, expectedObject)).not.to.throw()
+    })
+
+    it('should not work if no test of result was done before hand', () => {
+      const expectedValue = 'Some String'
+      const someSuccessResult = Success('Some String')
+
+      const noResultCheckAssertion = function (value, expected) {
+        return () => expect(value).to.have.an.associatedValue.that.equals(expected)
+      }
+
+      const assertionErrorMessage = 'No Result check done,' +
+        ' use \'result\', \'success\', or \'failure\' assertion before \'associatedValue\''
+      expect(noResultCheckAssertion(someSuccessResult, expectedValue)).to.throw(AssertionError, assertionErrorMessage)
+    })
+  })
 })

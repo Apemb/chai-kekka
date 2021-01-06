@@ -4,6 +4,10 @@ const {
   assertIsAFailure,
   assertAssociatedValueEquality
 } = require('./src/assertions')
+const {
+  setAssociatedValue,
+  setAssociatedValueAsObject
+} = require('./src/helpers')
 
 module.exports = function (chai, utils) {
   const Assertion = chai.Assertion
@@ -11,6 +15,8 @@ module.exports = function (chai, utils) {
   utils.addProperty(Assertion.prototype, 'result', function () {
     const obj = utils.flag(this, 'object')
     assertIsAResultInstance(this, obj)
+
+    setAssociatedValue(this, utils, obj.value)
   })
 
   utils.addProperty(Assertion.prototype, 'success', function () {
@@ -19,6 +25,12 @@ module.exports = function (chai, utils) {
     // do not transfer chai flags for is a result instance test (like negation)
     assertIsAResultInstance(new Assertion(obj), obj)
     assertIsASuccess(this, obj)
+
+    setAssociatedValue(this, utils, obj.value)
+  })
+
+  utils.addProperty(Assertion.prototype, 'associatedValue', function () {
+    setAssociatedValueAsObject(this, utils)
   })
 
   utils.addMethod(Assertion.prototype, 'successWrapping', function (
@@ -38,6 +50,8 @@ module.exports = function (chai, utils) {
     // do not transfer chai flags for is a result instance test (like negation)
     assertIsAResultInstance(new Assertion(obj), obj)
     assertIsAFailure(this, obj)
+
+    setAssociatedValue(this, utils, obj.value)
   })
 
   utils.addMethod(Assertion.prototype, 'failureWrapping', function (
