@@ -47,6 +47,24 @@ describe('assertions', () => {
       const assertionErrorMessage = '\'Some String\' to be an instance of Result'
       expect(isASuccessAssertion(notAResult)).to.throw(AssertionError, assertionErrorMessage)
     })
+
+    it('should negate only the success vs failure part', () => {
+      const notAResult = 'Some String'
+      const someSuccessResult = Success('Some String')
+      const someFailureResult = Failure(new Error('Failure...'))
+
+      const isNotASuccessAssertion = function (value) {
+        return () => expect(value).to.not.be.a.success
+      }
+
+      const assertionErrorMessage1 = 'expected [Result-Success (Some String)] not to be a success'
+      expect(isNotASuccessAssertion(someSuccessResult)).to.throw(AssertionError, assertionErrorMessage1)
+
+      expect(isNotASuccessAssertion(someFailureResult)).not.to.throw()
+
+      const assertionErrorMessage2 = 'expected \'Some String\' to be an instance of Result'
+      expect(isNotASuccessAssertion(notAResult)).to.throw(AssertionError, assertionErrorMessage2)
+    })
   })
 
   describe('successWrapping', () => {
@@ -111,6 +129,24 @@ describe('assertions', () => {
 
       const assertionErrorMessage = '\'Some String\' to be an instance of Result'
       expect(isAFailureAssertion(notAResult)).to.throw(AssertionError, assertionErrorMessage)
+    })
+
+    it('should negate only the success vs failure part', () => {
+      const notAResult = 'Some String'
+      const someSuccessResult = Success('Some String')
+      const someFailureResult = Failure(new Error('Failure...'))
+
+      const isNotAFailureAssertion = function (value) {
+        return () => expect(value).to.not.be.a.failure
+      }
+
+      expect(isNotAFailureAssertion(someSuccessResult)).not.to.throw()
+
+      const assertionErrorMessage1 = 'expected [Result-Failure (Error: Failure...)] not to be a failure'
+      expect(isNotAFailureAssertion(someFailureResult)).to.throw(AssertionError, assertionErrorMessage1)
+
+      const assertionErrorMessage2 = 'expected \'Some String\' to be an instance of Result'
+      expect(isNotAFailureAssertion(notAResult)).to.throw(AssertionError, assertionErrorMessage2)
     })
   })
 
