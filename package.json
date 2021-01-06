@@ -1,6 +1,6 @@
 {
   "name": "chai-kekka",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Chai plugin for Kekka",
   "repository": {
     "type": "git",
