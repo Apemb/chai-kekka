@@ -1,14 +1,16 @@
-const { AssertionError } = require('chai')
+import {AssertionError} from 'chai'
+import {InternalAssertion} from "./internal-assertion";
+import ChaiUtils = Chai.ChaiUtils;
 
 const HAS_ASSOCIATED_VALUE_FLAG = 'kekkaHasAssociatedValue'
 const ASSOCIATED_VALUE_FLAG = 'kekkaAssociatedValue'
 
-const setAssociatedValue = function (assertion, utils, associatedValue) {
+const setAssociatedValue = function (assertion: InternalAssertion, utils: ChaiUtils, associatedValue: any) {
   utils.flag(assertion, ASSOCIATED_VALUE_FLAG, associatedValue)
   utils.flag(assertion, HAS_ASSOCIATED_VALUE_FLAG, true)
 }
 
-const setAssociatedValueAsObject = function (assertion, utils) {
+const setAssociatedValueAsObject = function (assertion: InternalAssertion, utils: ChaiUtils) {
   const hasAssociatedValue = utils.flag(assertion, HAS_ASSOCIATED_VALUE_FLAG)
 
   if (!hasAssociatedValue) {
@@ -22,7 +24,7 @@ const setAssociatedValueAsObject = function (assertion, utils) {
   utils.flag(assertion, 'object', associatedValue)
 }
 
-module.exports = {
+export {
   setAssociatedValue,
   setAssociatedValueAsObject
 }

@@ -1,9 +1,9 @@
-const { expect, AssertionError } = require('./test-helper')
-const { Success, Failure } = require('kekka')
+import {Failure, Success} from "kekka"
+import {AssertionError, expect} from "./test-helper";
 
-describe('assertions in Javascript', () => {
+describe('assertions in Typescript', () => {
   describe('result', () => {
-    const isAResultAssertion = function (value) {
+    const isAResultAssertion = function (value: any) {
       return () => expect(value).to.be.a.result
     }
 
@@ -24,7 +24,7 @@ describe('assertions in Javascript', () => {
   })
 
   describe('success', () => {
-    const isASuccessAssertion = function (value) {
+    const isASuccessAssertion = function (value: any) {
       return () => expect(value).to.be.a.success
     }
 
@@ -53,7 +53,7 @@ describe('assertions in Javascript', () => {
       const someSuccessResult = Success('Some String')
       const someFailureResult = Failure(new Error('Failure...'))
 
-      const isNotASuccessAssertion = function (value) {
+      const isNotASuccessAssertion = function (value: any) {
         return () => expect(value).to.not.be.a.success
       }
 
@@ -68,10 +68,10 @@ describe('assertions in Javascript', () => {
   })
 
   describe('successWrapping', () => {
-    const isSuccessWrappingAssertion = function (value, expectedValue) {
+    const isSuccessWrappingAssertion = function (value: any, expectedValue: any) {
       return () => expect(value).to.be.a.successWrapping(expectedValue)
     }
-    const isDeepSuccessWrappingAssertion = function (value, expectedValue) {
+    const isDeepSuccessWrappingAssertion = function (value: any, expectedValue: any) {
       return () => expect(value).to.be.a.deep.successWrapping(expectedValue)
     }
 
@@ -83,8 +83,8 @@ describe('assertions in Javascript', () => {
     })
 
     it('should succeed with a deep equality', () => {
-      const associatedObject = { a: '423' }
-      const someSuccessResult = Success({ a: '423' })
+      const associatedObject = {a: '423'}
+      const someSuccessResult = Success({a: '423'})
 
       const assertionErrorMessage = 'expected { a: \'423\' } to equal { a: \'423\' }'
       expect(isSuccessWrappingAssertion(someSuccessResult, associatedObject)).to.throw(AssertionError, assertionErrorMessage)
@@ -107,7 +107,7 @@ describe('assertions in Javascript', () => {
   })
 
   describe('failure', () => {
-    const isAFailureAssertion = function (value) {
+    const isAFailureAssertion = function (value: any) {
       return () => expect(value).to.be.a.failure
     }
 
@@ -136,7 +136,7 @@ describe('assertions in Javascript', () => {
       const someSuccessResult = Success('Some String')
       const someFailureResult = Failure(new Error('Failure...'))
 
-      const isNotAFailureAssertion = function (value) {
+      const isNotAFailureAssertion = function (value: any) {
         return () => expect(value).to.not.be.a.failure
       }
 
@@ -151,7 +151,7 @@ describe('assertions in Javascript', () => {
   })
 
   describe('failureWrapping', () => {
-    const isFailureWrappingAssertion = function (value, expectedValue) {
+    const isFailureWrappingAssertion = function (value: any, expectedValue: any) {
       return () => expect(value).to.be.a.failureWrapping(expectedValue)
     }
 
@@ -182,8 +182,8 @@ describe('assertions in Javascript', () => {
       const expectedValue = 'Some String'
       const someSuccessResult = Success('Some String')
 
-      const isASuccessAssociatedValueAssertion = function (value, expected) {
-        return () => expect(value).to.be.a.success.with.associatedValue.that.equals(expected)
+      const isASuccessAssociatedValueAssertion = function (value: any, expectedValue: any) {
+        return () => expect(value).to.be.a.success.with.associatedValue.that.equals(expectedValue)
       }
 
       expect(isASuccessAssociatedValueAssertion(someSuccessResult, expectedValue)).not.to.throw()
@@ -193,8 +193,8 @@ describe('assertions in Javascript', () => {
       const expectedValue = new Error('Some Failure')
       const someFailureResult = Failure(expectedValue)
 
-      const isAFailureAssociatedValueAssertion = function (value, expected) {
-        return () => expect(value).to.be.a.failure.with.associatedValue.that.equals(expected)
+      const isAFailureAssociatedValueAssertion = function (value: any, expectedValue: any) {
+        return () => expect(value).to.be.a.failure.with.associatedValue.that.equals(expectedValue)
       }
 
       expect(isAFailureAssociatedValueAssertion(someFailureResult, expectedValue)).not.to.throw()
@@ -204,19 +204,19 @@ describe('assertions in Javascript', () => {
       const expectedValue = 'Some String'
       const someSuccessResult = Success('Some String')
 
-      const isAResultAssociatedValueAssertion = function (value, expected) {
-        return () => expect(value).to.be.a.result.with.associatedValue.that.equals(expected)
+      const isAResultAssociatedValueAssertion = function (value: any, expectedValue: any) {
+        return () => expect(value).to.be.a.result.with.associatedValue.that.equals(expectedValue)
       }
 
       expect(isAResultAssociatedValueAssertion(someSuccessResult, expectedValue)).not.to.throw()
     })
 
     it('should work also with deep equality assertion', () => {
-      const expectedObject = { a: 'property' }
-      const someSuccessResult = Success({ a: 'property' })
+      const expectedObject = {a: 'property'}
+      const someSuccessResult = Success({a: 'property'})
 
-      const isASuccessAssociatedValueAssertion = function (value, expected) {
-        return () => expect(value).to.be.a.success.with.associatedValue.that.deep.equals(expected)
+      const isASuccessAssociatedValueAssertion = function (value: any, expectedValue: any) {
+        return () => expect(value).to.be.a.success.with.associatedValue.that.deep.equals(expectedValue)
       }
 
       expect(isASuccessAssociatedValueAssertion(someSuccessResult, expectedObject)).not.to.throw()
@@ -226,8 +226,8 @@ describe('assertions in Javascript', () => {
       const expectedValue = 'Some String'
       const someSuccessResult = Success('Some String')
 
-      const noResultCheckAssertion = function (value, expected) {
-        return () => expect(value).to.have.an.associatedValue.that.equals(expected)
+      const noResultCheckAssertion = function (value: any, expectedValue: any) {
+        return () => expect(value).to.have.an.associatedValue.that.equals(expectedValue)
       }
 
       const assertionErrorMessage = 'No Result check done,' +
