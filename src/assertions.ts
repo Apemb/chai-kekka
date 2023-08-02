@@ -1,10 +1,15 @@
-import {Result} from 'kekka'
+import {isResult} from 'kekka'
 import ChaiUtils = Chai.ChaiUtils
 import AssertionStatic = Chai.AssertionStatic
-import {InternalAssertion} from "./internal-assertion";
+import {InternalAssertion} from './internal-assertion'
 
-const assertIsAResultInstance = function (assertion: InternalAssertion, _obj: any) {
-  assertion.to.be.an.instanceof(Result)
+const assertIsAResultInstance = function (assertion: InternalAssertion, obj: any) {
+  assertion.assert(
+    isResult(obj),
+    'expected #{this} to be an instance of Result',
+    'expected #{this} not to be an instance of Result',
+    undefined
+    )
 }
 
 const assertIsASuccess = function (assertion: InternalAssertion, obj: any) {
@@ -25,7 +30,12 @@ const assertIsAFailure = function (assertion: InternalAssertion, obj: any) {
   )
 }
 
-const assertAssociatedValueEquality = function (assertion: InternalAssertion, obj: any, expectedObj: any, {utils, Assertion}: {utils: ChaiUtils, Assertion: AssertionStatic}) {
+const assertAssociatedValueEquality = function (
+  assertion: InternalAssertion,
+  obj: any,
+  expectedObj: any,
+  { utils, Assertion }: { utils: ChaiUtils, Assertion: AssertionStatic }
+) {
   const valueEqualityAssertion = new Assertion(obj.value)
   utils.transferFlags(assertion, valueEqualityAssertion, false)
 
